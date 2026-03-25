@@ -22,25 +22,52 @@ class MyApp extends StatelessWidget {
               Text("Organizacja studiów"),
               SizedBox(height: 20),
               Text("Dzisiejsze zadania"),
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.task),
-                  title: Text("Projekt Flutter"),
-                  subtitle: Text("termin: jutro"),
-
-                ),
+              const TaskCard(
+                title: "Projekt Flutter",
+                subtitle: "termin: jutro",
+                icon: Icons.task,
               ),
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.task),
-                  title: Text("Ćwiczenia z matematyki"),
-                  subtitle: Text("termin: dzisiaj"),
-
-                ),
+              const TaskCard(
+                title: "Ćwiczenia z matematyki",
+                subtitle: "termin: dzisiaj",
+                icon: Icons.task,
+              ),
+              const TaskCard(
+                title: "Przeczytać o widgetach",
+                subtitle: "termin: w tym tygodniu",
+                icon: Icons.task,
               ),
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+}
+
+class TaskCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final IconData icon; // parametr dla ikony
+
+  const TaskCard({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: Icon(icon),
+        title: Text(title),
+        subtitle: Text(subtitle),
       ),
     );
   }

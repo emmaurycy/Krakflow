@@ -10,6 +10,51 @@ List<Task> tasks = [
   Task("Przeczytać o widgetach", "w tym tygodniu", false, "niski"),
 ];
 
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("KrakFlow"),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Text("moja lista ${tasks.length} zadan"),
+            Expanded(
+              child: ListView.builder(
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  var task = tasks[index];
+                  return TaskCard(
+                    task.title,
+                    task.deadline,
+                    task.done
+                        ? Icons.check_circle
+                        : Icons.radio_button_unchecked,
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -17,24 +62,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'krakflow',
-      home: Column(
-        children: [
-          Text("moja lista ${tasks.length} zadan"),
-          Expanded(
-            child: ListView.builder(
-              itemCount: tasks.length,
-              itemBuilder: (context, index) {
-                var task = tasks[index];
-                return TaskCard(
-                  task.title,
-                  task.deadline,
-                  task.done ? Icons.check_circle : Icons.radio_button_unchecked,
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+      home: HomeScreen()
     );
   }
 }
@@ -53,11 +81,7 @@ class TaskCard extends StatelessWidget {
   String subtitle;
   IconData icon;
 
-  TaskCard(
-    this.title,
-    this.subtitle,
-    this.icon,
-  );
+  TaskCard(this.title, this.subtitle, this.icon);
 
   @override
   Widget build(BuildContext context) {

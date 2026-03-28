@@ -4,62 +4,60 @@ void main() {
   runApp(const MyApp());
 }
 
+List<Task> tasks = [
+  Task("Projekt Flutter", "jutro", false, "wysoki"),
+  Task("Ćwiczenia z matematyki", "dzisiaj", true, "wysoki"),
+  Task("Przeczytać o widgetach", "w tym tygodniu", false, "niski"),
+];
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Center(
-            child: Column(children: [Text("KrakFlow"), SizedBox(height: 20)]),
+      title: 'krakflow',
+      home: Column(
+        children: [
+          Text("moja lista ${tasks.length} zadan"),
+          Expanded(
+            child: ListView.builder(
+              itemCount: tasks.length,
+              itemBuilder: (context, index) {
+                var task = tasks[index];
+                return TaskCard(
+                  task.title,
+                  task.deadline,
+                  task.done ? Icons.check_circle : Icons.radio_button_unchecked,
+                );
+              },
+            ),
           ),
-        ),
-        body: Center(
-          child: Column(
-            children: [
-              Text("Organizacja studiów"),
-              SizedBox(height: 20),
-              Text("Dzisiejsze zadania"),
-              const TaskCard(
-                title: "Projekt Flutter",
-                subtitle: "termin: jutro",
-                icon: Icons.task,
-              ),
-              const TaskCard(
-                title: "Ćwiczenia z matematyki",
-                subtitle: "termin: dzisiaj",
-                icon: Icons.task,
-              ),
-              const TaskCard(
-                title: "Przeczytać o widgetach",
-                subtitle: "termin: w tym tygodniu",
-                icon: Icons.task,
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.add),
-        ),
+        ],
       ),
     );
   }
 }
 
-class TaskCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final IconData icon; // parametr dla ikony
+class Task {
+  String title;
+  String deadline;
+  bool done;
+  String priority;
 
-  const TaskCard({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-  });
+  Task(this.title, this.deadline, this.done, this.priority);
+}
+
+class TaskCard extends StatelessWidget {
+  String title;
+  String subtitle;
+  IconData icon;
+
+  TaskCard(
+    this.title,
+    this.subtitle,
+    this.icon,
+  );
 
   @override
   Widget build(BuildContext context) {
